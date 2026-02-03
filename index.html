@@ -2,21 +2,46 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Veux-tu être ma Valentine ?</title>
+<title>Veux-tu être ma Valentine ? 💖</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    margin-top: 100px;
+    background: #ffe6f0;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    color: #ff3366;
+    font-size: 2em;
+    margin-bottom: 50px;
   }
   button {
-    padding: 10px 20px;
-    font-size: 18px;
+    padding: 15px 30px;
+    font-size: 20px;
     cursor: pointer;
     position: absolute;
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s, background 0.2s;
   }
-  #oui {
-    margin-top: 50px;
+  button#oui {
+    background: #ff6699;
+    color: white;
+    top: 60%;
+    left: 40%;
+  }
+  button#oui:hover {
+    transform: scale(1.1);
+  }
+  button#non {
+    background: #ff99cc;
+    color: white;
   }
 </style>
 </head>
@@ -29,11 +54,22 @@
 
 <script>
 const nonBtn = document.getElementById('non');
-nonBtn.addEventListener('mouseenter', () => {
+
+function bouger() {
   const x = Math.random() * (window.innerWidth - nonBtn.offsetWidth);
   const y = Math.random() * (window.innerHeight - nonBtn.offsetHeight);
   nonBtn.style.left = x + 'px';
   nonBtn.style.top = y + 'px';
+}
+
+// Bouge sur PC
+nonBtn.addEventListener('mouseenter', bouger);
+// Bouge sur tablette/smartphone
+nonBtn.addEventListener('touchstart', bouger);
+
+// Optionnel : le bouton Oui fait un petit message
+document.getElementById('oui').addEventListener('click', () => {
+  alert("💖 Youpi ! Tu es ma Valentine ! 💖");
 });
 </script>
 
