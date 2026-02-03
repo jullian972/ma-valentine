@@ -7,7 +7,7 @@
   body {
     font-family: 'Arial', sans-serif;
     text-align: center;
-    background: #ffe6f0;
+    background: linear-gradient(to bottom, #ff99cc, #ff66aa);
     margin: 0;
     height: 100vh;
     overflow: hidden;
@@ -15,12 +15,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
   }
+
   h1 {
-    color: #ff3366;
-    font-size: 2em;
+    color: white;
+    font-size: 2.2em;
     margin-bottom: 50px;
+    text-shadow: 2px 2px 5px #ff66aa;
   }
+
   button {
     padding: 15px 30px;
     font-size: 20px;
@@ -30,19 +34,42 @@
     border-radius: 12px;
     transition: transform 0.2s, background 0.2s;
   }
+
   button#oui {
-    background: #ff6699;
+    background: #ff3366;
     color: white;
     top: 60%;
     left: 40%;
   }
+
   button#oui:hover {
     transform: scale(1.1);
   }
+
   button#non {
     background: #ff99cc;
     color: white;
   }
+
+  /* style pour confettis */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    opacity: 0.8;
+    pointer-events: none;
+    border-radius: 50%;
+    animation: fall 2s linear forwards;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -55,6 +82,7 @@
 <script>
 const nonBtn = document.getElementById('non');
 
+// Fonction pour bouger le bouton Non
 function bouger() {
   const x = Math.random() * (window.innerWidth - nonBtn.offsetWidth);
   const y = Math.random() * (window.innerHeight - nonBtn.offsetHeight);
@@ -62,13 +90,26 @@ function bouger() {
   nonBtn.style.top = y + 'px';
 }
 
-// Bouge sur PC
+// Bouge sur PC et tablette
 nonBtn.addEventListener('mouseenter', bouger);
-// Bouge sur tablette/smartphone
 nonBtn.addEventListener('touchstart', bouger);
 
-// Optionnel : le bouton Oui fait un petit message
+// Fonction pour créer les confettis
+function lancerConfettis() {
+  for(let i = 0; i < 30; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 75%)`;
+    confetti.style.animationDuration = (Math.random()*2 + 1) + 's';
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 2000);
+  }
+}
+
+// Bouton Oui déclenche confettis
 document.getElementById('oui').addEventListener('click', () => {
+  lancerConfettis();
   alert("💖 Youpi ! Tu es ma Valentine ! 💖");
 });
 </script>
